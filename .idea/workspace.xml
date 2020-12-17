@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="50b91a39-2012-4b98-b235-e72f78106505" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/api/logger/logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/models/projects.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/interface.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/postgres/connector.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/postgres/db-logger.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/postgres/db-query.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/postgres/projects/interface.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/postgres/projects/projects.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api/store/repo/repo.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Go File" />
+      </list>
+    </option>
+  </component>
+  <component name="GOROOT" path="$USER_HOME$/sdk/go1.15.5" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="false" />
+  </component>
+  <component name="ProjectId" id="1lkKwMLMjVvKmN2kf2Xx6bOfpYi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultGoTemplateProperty" value="Go File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="go.tried.to.enable.integration.vgo.integrator" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/api/store" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/api/store" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>true</integration-enabled>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="655" y="460" width="610" height="208" key="#GOROOT" timestamp="1608135903399">
+      <screen x="0" y="41" width="1920" height="1039" />
+    </state>
+    <state x="655" y="460" width="610" height="208" key="#GOROOT/0.41.1920.1039@0.41.1920.1039" timestamp="1608135903399" />
+    <state x="655" y="322" width="600" height="484" key="#Go_Modules" timestamp="1608135899897">
+      <screen x="0" y="41" width="1920" height="1039" />
+    </state>
+    <state x="655" y="322" width="600" height="484" key="#Go_Modules/0.41.1920.1039@0.41.1920.1039" timestamp="1608135899897" />
+    <state x="538" y="150" width="843" height="820" key="find.popup" timestamp="1608136744240">
+      <screen x="0" y="41" width="1920" height="1039" />
+    </state>
+    <state x="538" y="150" width="843" height="820" key="find.popup/0.41.1920.1039@0.41.1920.1039" timestamp="1608136744240" />
+    <state x="618" y="312" width="674" height="504" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1608136777262">
+      <screen x="0" y="41" width="1920" height="1039" />
+    </state>
+    <state x="618" y="312" width="674" height="504" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/0.41.1920.1039@0.41.1920.1039" timestamp="1608136777262" />
+  </component>
+</project>
