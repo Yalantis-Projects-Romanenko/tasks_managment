@@ -62,14 +62,12 @@ func main() {
 	// 	logger.Get().Fatal("Failed to load services", zap.Error(err))
 	// }
 
-	url := "localhost:5000"
-
 	server := &http.Server{
-		Addr:    url,
+		Addr:    config.Get().ListenURL,
 		Handler: handlers.NewRouter(),
 	}
 
-	// logger.Get().Info("Listening...", zap.String("listen_url", config.Get().ListenURL))
+	logger.Get().Info("Listening...", zap.String("listen_url", config.Get().ListenURL))
 	err = server.ListenAndServe()
 	if err != nil {
 		// logger.Get().Error("Failed to initialize HTTP server", zap.Error(err))
