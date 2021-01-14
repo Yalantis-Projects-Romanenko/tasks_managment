@@ -1,13 +1,10 @@
-package projects
+package tasks
 
 import (
 	"github.com/fdistorted/task_managment/handlers/common"
 	"net/http"
 )
 
-func Get(w http.ResponseWriter, r *http.Request) {
-	//vars := mux.Vars(r)
-	//id := vars["id"]
-
+func GetAll(w http.ResponseWriter, r *http.Request) {
 	common.SendResponse(w, http.StatusInternalServerError, "not implemented yet")
 }

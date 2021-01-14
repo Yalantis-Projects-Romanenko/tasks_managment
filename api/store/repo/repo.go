@@ -12,7 +12,7 @@ var (
 )
 
 type postgresRepo struct {
-	candlesDAO projects.DAO
+	projectsDAO projects.DAO
 }
 
 func Get() postgresRepo {
@@ -22,13 +22,13 @@ func Get() postgresRepo {
 func Load() (err error) {
 	once.Do(func() {
 		repo = postgresRepo{
-			candlesDAO: projects.NewCandlesDAO(),
+			projectsDAO: projects.NewProjectsDAO(),
 		}
 	})
 
 	return err
 }
 
-func (r postgresRepo) Candles() projects.DAO {
-	return r.candlesDAO
+func (r postgresRepo) Projects() projects.DAO {
+	return r.projectsDAO
 }

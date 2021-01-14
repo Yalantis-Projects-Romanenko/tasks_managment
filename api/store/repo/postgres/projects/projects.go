@@ -10,7 +10,7 @@ type projectsDAO struct {
 	q *postgres.DBQuery
 }
 
-func NewCandlesDAO() DAO {
+func NewProjectsDAO() DAO {
 	return &projectsDAO{q: postgres.GetDB().QueryContext(context.Background())}
 }
 
@@ -26,10 +26,10 @@ func (dao projectsDAO) Get(id int64) (project models.Project, err error) {
 	return project, err
 }
 
-func (dao projectsDAO) Insert(candle models.Project) (_ models.Project, err error) {
-	_, err = dao.q.Model(&candle).
+func (dao projectsDAO) Insert(project models.Project) (_ models.Project, err error) {
+	_, err = dao.q.Model(&project).
 		Returning("*").
 		Insert()
 
-	return candle, err
+	return project, err
 }

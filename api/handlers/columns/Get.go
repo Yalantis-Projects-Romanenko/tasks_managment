@@ -1,4 +1,4 @@
-package projects
+package columns
 
 import (
 	"github.com/fdistorted/task_managment/handlers/common"
