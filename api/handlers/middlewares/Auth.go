@@ -35,20 +35,20 @@ func Authorize(next http.Handler) http.Handler {
 
 			header := r.Header.Get(authorizationHeader)
 			if header == "" {
-				common.SendRawResponse(w, 401, []byte("no auth token"))
+				common.SendResponse(w, 401, "no auth token")
 				return
 			}
 
 			data, err := base64.StdEncoding.DecodeString(header)
 			if err != nil {
 				logger.Get().Error("failed to decode token", zap.Error(err))
-				common.SendRawResponse(w, 401, []byte("failed to decode token"))
+				common.SendResponse(w, 401, "failed to decode token")
 				return
 			}
 
 			username := string(data)
 			if !CheckUsername(username) {
-				common.SendRawResponse(w, 401, []byte("wrong username"))
+				common.SendResponse(w, 401, "wrong username")
 			}
 
 			logger.Get().Info("got user id", zap.String(UserIdFieldName, username))
