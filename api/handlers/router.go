@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/fdistorted/task_managment/handlers/columns"
+	"github.com/fdistorted/task_managment/handlers/comments"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/handlers/projects"
 	"github.com/fdistorted/task_managment/handlers/tasks"
@@ -16,6 +17,7 @@ func NewRouter() *mux.Router {
 
 	//r.Use(middleware.Recoverer)
 	r.Use(middlewares.RequestID)
+	// TODO add auth middleware
 
 	r.HandleFunc("/healthCheck", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -24,18 +26,20 @@ func NewRouter() *mux.Router {
 
 	// subpaths
 	projectsRouter := r.PathPrefix("/projects").Subrouter()
+	projectsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
 	projectsRouter.HandleFunc("/", projects.GetAll).Methods("GET")
 	projectsRouter.HandleFunc("/{id}/", projects.Get).Methods("GET")
 	//// "/products/{key}/details"
 	//projectsRouter.HandleFunc("/{key}/details", ProductDetailsHandler)
 
 	columnsRouter := r.PathPrefix("/columns").Subrouter()
-	columnsRouter.HandleFunc("/", columns.GetAll).Methods("GET")
 	columnsRouter.HandleFunc("/{id}/", columns.Get).Methods("GET")
 
 	tasksRouter := r.PathPrefix("/tasks").Subrouter()
-	tasksRouter.HandleFunc("/", tasks.GetAll).Methods("GET")
 	tasksRouter.HandleFunc("/{id}/", tasks.Get).Methods("GET")
+
+	commentsRouter := r.PathPrefix("/comments").Subrouter()
+	commentsRouter.HandleFunc("/{id}/", comments.Get).Methods("GET")
 
 	return r
 }
