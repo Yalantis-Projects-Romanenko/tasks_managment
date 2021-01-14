@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/fdistorted/task_managment/handlers/projects"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -18,13 +19,12 @@ func NewRouter() *mux.Router {
 		fmt.Fprintf(w, "hi there ^._.^")
 	}).Methods("GET").Schemes("http")
 
-	// // subpaths
-	// s := r.PathPrefix("/boards").Subrouter()
-	// s.HandleFunc("/", ProductsHandler)
-	// // "/products/{key}/"
-	// s.HandleFunc("/{key}/", ProductHandler)
-	// // "/products/{key}/details"
-	// s.HandleFunc("/{key}/details", ProductDetailsHandler)
+	// subpaths
+	s := r.PathPrefix("/projects").Subrouter()
+	s.HandleFunc("/", projects.GetAll).Methods("GET")
+	s.HandleFunc("/{project_id}/", projects.Get).Methods("GET")
+	//// "/products/{key}/details"
+	//s.HandleFunc("/{key}/details", ProductDetailsHandler)
 
 	return r
 }
