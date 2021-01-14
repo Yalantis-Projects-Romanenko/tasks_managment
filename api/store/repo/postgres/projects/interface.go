@@ -5,7 +5,7 @@ import (
 )
 
 type DAO interface {
-	Get(id int64) (models.Project, error)
+	Get(id string) (models.Project, error)
 
 	Insert(project models.Project) (_ models.Project, err error)
 }

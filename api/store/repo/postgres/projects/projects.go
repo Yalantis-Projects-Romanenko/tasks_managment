@@ -18,7 +18,7 @@ func (dao projectsDAO) WithTx(tx *postgres.DBQuery) DAO {
 	return &projectsDAO{q: tx}
 }
 
-func (dao projectsDAO) Get(id int64) (project models.Project, err error) {
+func (dao projectsDAO) Get(id string) (project models.Project, err error) {
 	err = dao.q.Model(&project).
 		Where("id = ?", id).
 		Select()
