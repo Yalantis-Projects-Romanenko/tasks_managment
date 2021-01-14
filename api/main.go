@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/fdistorted/task_managment/db"
 	"github.com/fdistorted/task_managment/logger"
-	"github.com/fdistorted/task_managment/store/repo/postgres"
 	"go.uber.org/zap"
 	"log"
 	"net/http"
@@ -33,34 +33,7 @@ func main() {
 	// 	logger.Get().Error("Failed to load validator", zap.Error(err))
 	// }
 
-	err = postgres.Load(config.Get().Postgres, logger.Get().Sugar())
-	if err != nil {
-		logger.Get().Fatal("Failed to connect to postgres", zap.Error(err))
-	}
-
-	// err = redis.Load(config.Get().Redis)
-	// if err != nil {
-	// 	logger.Get().Fatal("Failed to connect to redis", zap.Error(err))
-	// }
-
-	// err = rabbitmq.Load(config.Get().RabbitMQ)
-	// if err != nil {
-	// 	logger.Get().Fatal("Failed to connect to rabbit", zap.Error(err))
-	// }
-
-	// err = repo.Load()
-	// if err != nil {
-	// 	logger.Get().Fatal("Failed to initialize postgres repo", zap.Error(err))
-	// }
-
-	// extErr := services.Get().Stocks().ConsumeAll()
-	// if extErr != nil {
-	// 	logger.Get().Fatal("Failed to consume stocks data", zap.Error(extErr))
-	// }
-	// err = services.Load(config.Get(), rabbitmq.Get())
-	// if err != nil {
-	// 	logger.Get().Fatal("Failed to load services", zap.Error(err))
-	// }
+	db.NewDb(config.Get().Postgres)
 
 	server := &http.Server{
 		Addr:    config.Get().ListenURL,

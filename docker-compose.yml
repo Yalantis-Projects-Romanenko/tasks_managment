@@ -5,9 +5,9 @@ services:
     env_file:
       - database.env # configure postgres
     volumes:
-      - task-managment-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+      - tasks-db:/var/lib/postgresql/data/ # persist data even if container shuts down
     ports:
       - 5432:5432
 
 volumes:
-  task-managment-data: # named volumes can be managed easier using docker-compose-data: # named volumes can be managed easier using docker-compose
+  tasks-db: # named volumes can be managed easier using docker-compose-data: # named volumes can be managed easier using docker-compose

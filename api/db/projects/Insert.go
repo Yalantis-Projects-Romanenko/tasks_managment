@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-//todo use context in databse queries
+//TODO use context in databse queries
 func Insert(userId, project models.Project) error {
 	db := database.GetConn()
 	tx, err := db.Begin()

@@ -12,7 +12,9 @@ Task description is here: https://docs.google.com/document/d/1PPAbDVllQYpw7bFRSt
 add migration example:
 ```
  goose -dir ./migrations create initial sql
+ goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" up
 ```
+
 
 ## Athorization
 To make request authorized it should have `Authorization` header with `base64` encoder username there. Usename can contain only letters and numbers there.

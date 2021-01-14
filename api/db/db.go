@@ -2,6 +2,8 @@ package db
 
 import (
 	"database/sql"
+	"github.com/fdistorted/task_managment/config"
+	"github.com/fdistorted/task_managment/logger"
 	_ "github.com/lib/pq"
 	"log"
 )
@@ -9,8 +11,9 @@ import (
 // Database variables
 var connString string
 
-func NewDb(connStr string) {
-	connString = connStr
+func NewDb(postgres config.Postgres) {
+	connString = "postgresql://" + postgres.User + ":" + postgres.Password + "@" + postgres.Host + ":" + postgres.Port + "/" + postgres.Database
+	logger.Get().Debug(connString)
 }
 
 func GetConn() *sql.DB {
