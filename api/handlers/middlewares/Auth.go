@@ -7,6 +7,7 @@ import (
 	"github.com/fdistorted/task_managment/logger"
 	"go.uber.org/zap"
 	"net/http"
+	"strings"
 	"unicode"
 )
 
@@ -21,7 +22,7 @@ func GetUserID(ctx context.Context) (string, bool) {
 
 func CheckUsername(s string) bool {
 	for _, r := range s {
-		if !unicode.IsLetter(r) || !unicode.IsNumber(r) {
+		if !unicode.IsLetter(r) && !unicode.IsNumber(r) {
 			return false
 		}
 	}
@@ -39,7 +40,14 @@ func Authorize(next http.Handler) http.Handler {
 				return
 			}
 
-			data, err := base64.StdEncoding.DecodeString(header)
+			tokenParts := strings.Split(header, " ")
+
+			if len(tokenParts) != 2 {
+				common.SendResponse(w, 401, "wrong token format")
+				return
+			}
+
+			data, err := base64.StdEncoding.DecodeString(tokenParts[1])
 			if err != nil {
 				logger.Get().Error("failed to decode token", zap.Error(err))
 				common.SendResponse(w, 401, "failed to decode token")
@@ -49,6 +57,7 @@ func Authorize(next http.Handler) http.Handler {
 			username := string(data)
 			if !CheckUsername(username) {
 				common.SendResponse(w, 401, "wrong username")
+				return
 			}
 
 			logger.Get().Info("got user id", zap.String(UserIdFieldName, username))

@@ -11,9 +11,10 @@ import (
 
 func GetAllByUserId(userId string) (projects []models.Project) {
 	db := database.GetConn()
+
 	defer db.Close()
 
-	rows, err := db.Query("select id, pname, pdescription, created_at from project where user_id = $1", userId)
+	rows, err := db.Query("select id, pname, pdescription, created_at from projects where user_id = $1", userId)
 
 	if err != nil {
 		logger.Get().Fatal("Cannot connect: ", zap.Error(err))

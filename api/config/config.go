@@ -31,8 +31,8 @@ type (
 		Host         string       `json:"host"          envconfig:"POSTGRES_HOST"              default:"localhost"`
 		Port         string       `json:"port"          envconfig:"API_POSTGRES_PORT"          default:"5432"`
 		Database     string       `json:"database"      envconfig:"API_POSTGRES_DATABASE"      default:"tasks"`
-		User         string       `json:"user"          envconfig:"API_POSTGRES_USER"          default:"tasks_managment_user"`
-		Password     string       `json:"password"      envconfig:"API_POSTGRES_PASSWORD"      default:"tasks_managment_user!53452"`
+		User         string       `json:"user"          envconfig:"API_POSTGRES_USER"          default:"tasksuser"`
+		Password     string       `json:"password"      envconfig:"API_POSTGRES_PASSWORD"      default:"password123431"`
 		PoolSize     int          `json:"pool_size"     envconfig:"API_POSTGRES_POOL_SIZE"     default:"10"`
 		MaxRetries   int          `json:"max_retries"   envconfig:"API_POSTGRES_MAX_RETRIES"   default:"5"`
 		ReadTimeout  cfg.Duration `json:"read_timeout"  envconfig:"API_POSTGRES_READ_TIMEOUT"  default:"10s"`

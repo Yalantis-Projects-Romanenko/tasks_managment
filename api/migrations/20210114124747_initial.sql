@@ -1,6 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
-BEGIN;
+
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS projects (
     id UUID DEFAULT uuid_generate_v4(),
@@ -47,14 +47,11 @@ CREATE TABLE IF NOT EXISTS comments (
     PRIMARY KEY (id)
     );
 
-COMMIT;
+
 
 -- +goose Down
 -- SQL in this section is executed when the migration is rolled back.
-
-BEGIN;
 DROP TABLE projects;
 DROP TABLE columns;
 DROP TABLE tasks;
 DROP TABLE comments;
-COMMIT;
