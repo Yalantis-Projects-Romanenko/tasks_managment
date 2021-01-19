@@ -6,6 +6,7 @@ import (
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/models"
+	vld "github.com/fdistorted/task_managment/validator"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -21,6 +22,14 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&project)
 	if err != nil {
 		log.Fatalf("Unable to decode the request body.  %v", err)
+		return
+	}
+
+	validate := vld.Get()
+	err = validate.Struct(project)
+	if err != nil {
+		errors := vld.ParseValidationErrors(err)
+		common.SendResponse(w, http.StatusUnprocessableEntity, errors)
 		return
 	}
 

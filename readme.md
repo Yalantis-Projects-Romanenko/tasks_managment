@@ -15,6 +15,10 @@ add migration example:
  goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" up
 ```
 
+## Check it out using Postman
+here is a link to postman collection:
+https://www.getpostman.com/collections/88178d2e6247dadef6b4
+
 
 ## Athorization
 To make request authorized it should have `Authorization` header with `base64` encoder username there. Usename can contain only letters and numbers there.

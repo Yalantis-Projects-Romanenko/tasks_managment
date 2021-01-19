@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/fdistorted/task_managment/db"
 	"github.com/fdistorted/task_managment/logger"
+	"github.com/fdistorted/task_managment/validator"
 	"go.uber.org/zap"
 	"log"
 	"net/http"
@@ -28,10 +29,8 @@ func main() {
 		log.Fatalf("Failed to laod logger: %s", err.Error())
 	}
 
-	// err = validator.Load()
-	// if err != nil {
-	// 	logger.Get().Error("Failed to load validator", zap.Error(err))
-	// }
+	//init validator
+	validator.Init()
 
 	db.NewDb(config.Get().Postgres)
 

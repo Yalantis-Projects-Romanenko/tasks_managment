@@ -7,6 +7,7 @@ import (
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/logger"
 	"github.com/fdistorted/task_managment/models"
+	vld "github.com/fdistorted/task_managment/validator"
 	"go.uber.org/zap"
 	"log"
 	"net/http"
@@ -22,6 +23,14 @@ func Post(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		log.Fatalf("Unable to decode the request body.  %v", err)
+		return
+	}
+
+	validate := vld.Get()
+	err = validate.Struct(project)
+	if err != nil {
+		errors := vld.ParseValidationErrors(err)
+		common.SendResponse(w, http.StatusUnprocessableEntity, errors)
 		return
 	}
 
