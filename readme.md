@@ -15,6 +15,7 @@ go run main.go
 ## TODO
  - use transactions in database queries
  - use context through all request flow
+ - cover with tests
 
 
 ## Goose usage
