@@ -29,5 +29,5 @@ here is a link to postman collection:
 https://www.getpostman.com/collections/88178d2e6247dadef6b4
 
 
-## Athorization
-To make request authorized it should have `Authorization` header with `base64` encoder username there. Usename can contain only letters and numbers there.
+## Authorization
+To make request authorized, it should have `Authorization` header with `base64` encoded username there. Username can contain only letters and numbers.
