@@ -2,9 +2,18 @@
 This is a project for yalantis golang school.  
 Task description is here: https://docs.google.com/document/d/1PPAbDVllQYpw7bFRStGB_Gbcoj2TRs9NvyPfepuAf8w/edit#
 
-## TODO 
- - use goose for migrations
- - use request validators in request handlers
+## Start the project
+open root directory of the project in command line and run:
+```
+docker-compose up .
+cd api
+go get -u github.com/pressly/goose/cmd/goose
+goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" up
+go run main.go
+```
+
+## TODO
+ - use transactions in database queries
  - use context through all request flow
 
 
