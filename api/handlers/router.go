@@ -3,10 +3,8 @@ package handlers
 import (
 	"fmt"
 	"github.com/fdistorted/task_managment/handlers/columns"
-	"github.com/fdistorted/task_managment/handlers/comments"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/handlers/projects"
-	"github.com/fdistorted/task_managment/handlers/tasks"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -31,17 +29,16 @@ func NewRouter() *mux.Router {
 	projectsRouter.HandleFunc("/{id}/", projects.Get).Methods("GET")
 	projectsRouter.HandleFunc("/{id}/", projects.Delete).Methods("DELETE")
 	projectsRouter.HandleFunc("/{id}/", projects.Put).Methods("PUT")
-	//// "/products/{key}/details"
-	//projectsRouter.HandleFunc("/{key}/details", ProductDetailsHandler)
 
 	columnsRouter := r.PathPrefix("/columns").Subrouter()
+	columnsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
 	columnsRouter.HandleFunc("/{id}/", columns.Get).Methods("GET")
 
-	tasksRouter := r.PathPrefix("/tasks").Subrouter()
-	tasksRouter.HandleFunc("/{id}/", tasks.Get).Methods("GET")
+	//tasksRouter := r.PathPrefix("/tasks").Subrouter()
+	//tasksRouter.HandleFunc("/{id}/", tasks.Get).Methods("GET")
 
-	commentsRouter := r.PathPrefix("/comments").Subrouter()
-	commentsRouter.HandleFunc("/{id}/", comments.Get).Methods("GET")
+	//commentsRouter := r.PathPrefix("/comments").Subrouter()
+	//commentsRouter.HandleFunc("/{id}/", comments.Get).Methods("GET")
 
 	return r
 }

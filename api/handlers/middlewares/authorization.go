@@ -60,7 +60,7 @@ func Authorize(next http.Handler) http.Handler {
 				return
 			}
 
-			logger.Get().Info("got user id", zap.String(UserIdFieldName, username))
+			logger.Get().Debug("got user id", zap.String(UserIdFieldName, username))
 			ctx = context.WithValue(ctx, UserIdFieldName, username)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
