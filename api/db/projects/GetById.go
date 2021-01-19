@@ -2,12 +2,10 @@ package projects
 
 import (
 	database "github.com/fdistorted/task_managment/db"
-	"github.com/fdistorted/task_managment/logger"
 	"github.com/fdistorted/task_managment/models"
-	"go.uber.org/zap"
 )
 
-func GetById(userId, projectId string) models.Project {
+func GetById(userId, projectId string) (*models.Project, error) {
 	db := database.GetConn()
 	defer db.Close()
 
@@ -19,8 +17,8 @@ func GetById(userId, projectId string) models.Project {
 	// unmarshal the row object to user
 	err := row.Scan(&project.Id, &project.Name, &project.Description, &project.Created)
 	if err != nil {
-		logger.Get().Error("failed to scan sql result", zap.Error(err))
+		return nil, err
 	}
 
-	return project
+	return &project, nil
 }

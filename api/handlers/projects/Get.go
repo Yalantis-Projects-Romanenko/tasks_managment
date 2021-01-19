@@ -13,9 +13,13 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	id := vars["id"]
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, "failed to get userId")
+		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
 		return
 	}
-	project := projects2.GetById(userId, id)
+	project, err := projects2.GetById(userId, id)
+	if err != nil {
+		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		return
+	}
 	common.SendResponse(w, http.StatusOK, project)
 }

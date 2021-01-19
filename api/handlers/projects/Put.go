@@ -5,23 +5,30 @@ import (
 	"github.com/fdistorted/task_managment/db/projects"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
+	"github.com/fdistorted/task_managment/logger"
 	"github.com/fdistorted/task_managment/models"
 	vld "github.com/fdistorted/task_managment/validator"
 	"github.com/gorilla/mux"
-	"log"
+	"go.uber.org/zap"
 	"net/http"
 )
 
 func Put(w http.ResponseWriter, r *http.Request) {
+	userId, ok := middlewares.GetUserID(r.Context())
+	if !ok {
+		common.SendResponse(w, http.StatusBadRequest, common.FailedToGetUserId)
+		return
+	}
+
 	vars := mux.Vars(r)
 	id := vars["id"]
-	// create an empty user of type models.User
+
 	var project models.Project
 
-	// decode the json request to user
+	// decode the json request to project
 	err := json.NewDecoder(r.Body).Decode(&project)
 	if err != nil {
-		log.Fatalf("Unable to decode the request body.  %v", err)
+		common.SendResponse(w, http.StatusBadRequest, common.FailedToParseJson)
 		return
 	}
 
@@ -33,13 +40,13 @@ func Put(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId, ok := middlewares.GetUserID(r.Context())
-	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, "failed to get userId")
+	project.Id = id
+	affected, err := projects.Update(userId, project)
+	if err != nil {
+		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
 
-	project.Id = id
-	projects.Update(userId, project)
+	logger.Get().Info("Total rows/record affected %v", zap.Int64("rowsAffected", affected))
 	common.SendResponse(w, http.StatusOK, "project updated")
 }

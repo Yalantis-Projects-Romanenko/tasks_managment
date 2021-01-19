@@ -2,20 +2,18 @@ package projects
 
 import (
 	database "github.com/fdistorted/task_managment/db"
-	"github.com/fdistorted/task_managment/logger"
 	"github.com/fdistorted/task_managment/models"
-	"go.uber.org/zap"
 	"time"
 )
 
-func GetAllByUserId(userId string) (projects []models.Project) {
+func GetAllByUserId(userId string) (projects []models.Project, err error) {
 	db := database.GetConn()
 	defer db.Close()
 
 	rows, err := db.Query("select id, pname, pdescription, created_at from projects where user_id = $1", userId)
 
 	if err != nil {
-		logger.Get().Fatal("Cannot connect: ", zap.Error(err))
+		return
 	}
 
 	defer rows.Close()
@@ -27,7 +25,7 @@ func GetAllByUserId(userId string) (projects []models.Project) {
 		err = rows.Scan(&id, &pname, &pdescription, &created_at)
 
 		if err != nil {
-			logger.Get().Error("failed to scan sql result", zap.Error(err))
+			return
 		}
 
 		projects = append(projects, models.Project{
@@ -39,5 +37,5 @@ func GetAllByUserId(userId string) (projects []models.Project) {
 
 	}
 
-	return projects
+	return projects, err
 }

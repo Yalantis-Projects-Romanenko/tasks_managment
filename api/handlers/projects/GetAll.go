@@ -10,8 +10,18 @@ import (
 )
 
 func GetAll(w http.ResponseWriter, r *http.Request) {
-	userId, _ := middlewares.GetUserID(r.Context())
-	projects := projects2.GetAllByUserId(userId)
+
+	userId, ok := middlewares.GetUserID(r.Context())
+	if !ok {
+		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
+		return
+	}
+
+	projects, err := projects2.GetAllByUserId(userId)
+	if err != nil {
+		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		return
+	}
 	logger.Get().Info("got projects from the database ", zap.Int("projects_len", len(projects)))
 	common.SendResponse(w, http.StatusOK, projects)
 }

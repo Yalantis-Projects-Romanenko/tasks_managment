@@ -9,20 +9,22 @@ import (
 	"github.com/fdistorted/task_managment/models"
 	vld "github.com/fdistorted/task_managment/validator"
 	"go.uber.org/zap"
-	"log"
 	"net/http"
 )
 
 func Post(w http.ResponseWriter, r *http.Request) {
+	userId, ok := middlewares.GetUserID(r.Context())
+	if !ok {
+		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
+		return
+	}
 
-	// create an empty user of type models.User
 	var project models.Project
 
-	// decode the json request to user
+	// decode the json request to project
 	err := json.NewDecoder(r.Body).Decode(&project)
-
 	if err != nil {
-		log.Fatalf("Unable to decode the request body.  %v", err)
+		common.SendResponse(w, http.StatusBadRequest, common.FailedToParseJson)
 		return
 	}
 
@@ -34,15 +36,9 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userId, ok := middlewares.GetUserID(r.Context())
-	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, "failed to get userId")
-		return
-	}
-
 	id, err := projects.Insert(userId, project)
 	if err != nil {
-		common.SendResponse(w, http.StatusInternalServerError, "failed to create project")
+		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
 
