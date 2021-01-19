@@ -17,7 +17,6 @@ func NewRouter() *mux.Router {
 
 	//r.Use(middleware.Recoverer)
 	r.Use(middlewares.RequestID)
-	// TODO add auth middleware
 
 	r.HandleFunc("/healthCheck", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
