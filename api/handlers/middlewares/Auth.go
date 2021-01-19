@@ -36,27 +36,27 @@ func Authorize(next http.Handler) http.Handler {
 
 			header := r.Header.Get(authorizationHeader)
 			if header == "" {
-				common.SendResponse(w, 401, "no auth token")
+				common.SendResponse(w, http.StatusUnauthorized, "no auth token")
 				return
 			}
 
 			tokenParts := strings.Split(header, " ")
 
 			if len(tokenParts) != 2 {
-				common.SendResponse(w, 401, "wrong token format")
+				common.SendResponse(w, http.StatusUnauthorized, "wrong token format")
 				return
 			}
 
 			data, err := base64.StdEncoding.DecodeString(tokenParts[1])
 			if err != nil {
 				logger.Get().Error("failed to decode token", zap.Error(err))
-				common.SendResponse(w, 401, "failed to decode token")
+				common.SendResponse(w, http.StatusUnauthorized, "failed to decode token")
 				return
 			}
 
 			username := string(data)
 			if !CheckUsername(username) {
-				common.SendResponse(w, 401, "wrong username")
+				common.SendResponse(w, http.StatusUnauthorized, "wrong username")
 				return
 			}
 

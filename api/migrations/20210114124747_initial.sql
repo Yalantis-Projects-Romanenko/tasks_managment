@@ -5,8 +5,7 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS projects (
     id UUID DEFAULT uuid_generate_v4(),
     user_id varchar NOT NULL,
-
-    pname varchar NOT NULL UNIQUE,
+    pname varchar NOT NULL,
     pdescription varchar,
 
 

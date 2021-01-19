@@ -5,13 +5,11 @@ import (
 	"github.com/fdistorted/task_managment/logger"
 	"github.com/fdistorted/task_managment/models"
 	"go.uber.org/zap"
-	"log"
 	"time"
 )
 
 func GetAllByUserId(userId string) (projects []models.Project) {
 	db := database.GetConn()
-
 	defer db.Close()
 
 	rows, err := db.Query("select id, pname, pdescription, created_at from projects where user_id = $1", userId)
@@ -27,8 +25,9 @@ func GetAllByUserId(userId string) (projects []models.Project) {
 		var created_at time.Time
 
 		err = rows.Scan(&id, &pname, &pdescription, &created_at)
+
 		if err != nil {
-			log.Printf(err.Error())
+			logger.Get().Error("failed to scan sql result", zap.Error(err))
 		}
 
 		projects = append(projects, models.Project{

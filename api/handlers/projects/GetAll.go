@@ -12,6 +12,6 @@ import (
 func GetAll(w http.ResponseWriter, r *http.Request) {
 	userId, _ := middlewares.GetUserID(r.Context())
 	projects := projects2.GetAllByUserId(userId) // todo use user id from context
-	logger.Get().Info("got projects from the database %v", zap.Int("projects_len", len(projects)))
-	common.SendResponse(w, http.StatusInternalServerError, "not implemented yet")
+	logger.Get().Info("got projects from the database ", zap.Int("projects_len", len(projects)))
+	common.SendResponse(w, http.StatusOK, projects)
 }

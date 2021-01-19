@@ -28,7 +28,10 @@ func NewRouter() *mux.Router {
 	projectsRouter := r.PathPrefix("/projects").Subrouter()
 	projectsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
 	projectsRouter.HandleFunc("/", projects.GetAll).Methods("GET")
+	projectsRouter.HandleFunc("/", projects.Post).Methods("POST")
 	projectsRouter.HandleFunc("/{id}/", projects.Get).Methods("GET")
+	projectsRouter.HandleFunc("/{id}/", projects.Delete).Methods("DELETE")
+	projectsRouter.HandleFunc("/{id}/", projects.Put).Methods("PUT")
 	//// "/products/{key}/details"
 	//projectsRouter.HandleFunc("/{key}/details", ProductDetailsHandler)
 

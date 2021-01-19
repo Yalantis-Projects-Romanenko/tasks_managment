@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func Get(w http.ResponseWriter, r *http.Request) {
+func Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
 	userId, ok := middlewares.GetUserID(r.Context())
@@ -16,6 +16,6 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		common.SendResponse(w, http.StatusInternalServerError, "failed to get userId")
 		return
 	}
-	project := projects2.GetById(userId, id)
-	common.SendResponse(w, http.StatusOK, project)
+	projects2.DeleteById(userId, id)
+	common.SendResponse(w, http.StatusOK, "deleted")
 }
