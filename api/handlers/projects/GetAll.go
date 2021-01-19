@@ -22,6 +22,6 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
-	logger.Get().Info("got projects from the database ", zap.Int("projects_len", len(projects)))
+	logger.WithCtxValue(r.Context()).Info("got projects from the database ", zap.Int("projects_len", len(projects)))
 	common.SendResponse(w, http.StatusOK, projects)
 }

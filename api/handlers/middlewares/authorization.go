@@ -49,7 +49,7 @@ func Authorize(next http.Handler) http.Handler {
 
 			data, err := base64.StdEncoding.DecodeString(tokenParts[1])
 			if err != nil {
-				logger.Get().Error("failed to decode token", zap.Error(err))
+				logger.WithCtxValue(r.Context()).Error("failed to decode token", zap.Error(err))
 				common.SendResponse(w, http.StatusUnauthorized, "failed to decode token")
 				return
 			}
@@ -60,7 +60,7 @@ func Authorize(next http.Handler) http.Handler {
 				return
 			}
 
-			logger.Get().Debug("got user id", zap.String(UserIdFieldName, username))
+			logger.WithCtxValue(r.Context()).Debug("got user id", zap.String(UserIdFieldName, username))
 			ctx = context.WithValue(ctx, UserIdFieldName, username)
 
 			next.ServeHTTP(w, r.WithContext(ctx))

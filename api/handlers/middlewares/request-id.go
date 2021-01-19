@@ -18,7 +18,7 @@ func RequestID(next http.Handler) http.Handler {
 				requestID = uuid.New().String()
 			}
 
-			logger.WithRequestID(ctx, requestID)
+			ctx = logger.WithRequestID(ctx, requestID)
 
 			next.ServeHTTP(w, r.WithContext(ctx))
 		},

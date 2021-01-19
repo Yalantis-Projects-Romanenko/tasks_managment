@@ -47,6 +47,6 @@ func Put(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.Get().Info("Total rows/record affected %v", zap.Int64("rowsAffected", affected))
+	logger.WithCtxValue(r.Context()).Info("Total rows/record affected %v", zap.Int64("rowsAffected", affected))
 	common.SendResponse(w, http.StatusOK, "project updated")
 }
