@@ -16,6 +16,7 @@ go run main.go
  - use transactions in database queries
  - use context through all request flow
  - cover with tests
+ - handle not found requests
 
 
 ## Goose usage

@@ -1,18 +1,15 @@
-package projects
+package columns
 
 import (
-	"context"
 	database "github.com/fdistorted/task_managment/db"
-	"github.com/fdistorted/task_managment/models"
 )
 
-func Update(project models.Project, ctx context.Context) (int64, error) {
+func DeleteById(userId, projectId, columnId string) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()
 
 	// execute the sql statement
-	res, err := db.ExecContext(ctx, database.UpdateProject, project.UserId, project.Id, project.Name, project.Description)
-
+	res, err := db.Exec(database.DeleteColumnById, userId, projectId, columnId)
 	if err != nil {
 		return 0, err
 	}
@@ -23,5 +20,6 @@ func Update(project models.Project, ctx context.Context) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
+
 	return rowsAffected, nil
 }
