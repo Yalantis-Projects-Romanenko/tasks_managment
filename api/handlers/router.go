@@ -32,6 +32,7 @@ func NewRouter() *mux.Router {
 	//columns part
 	projectsRouter.HandleFunc("/{projectId}/columns/", columns.GetAll).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/{projectId}/columns/", columns.Post).Methods(http.MethodPost)
+	projectsRouter.HandleFunc("/{projectId}/columns-move/", columns.Move).Methods(http.MethodPost)
 
 	//tasksRouter := r.PathPrefix("/tasks").Subrouter()
 	//tasksRouter.HandleFunc("/ {projectId}/", tasks.Get).Methods(http.MethodGet)

@@ -17,8 +17,13 @@ const (
 	UpdateProject       = `UPDATE projects SET pname=$3, pdescription=$4 WHERE user_id=$1 and id=$2`
 
 	InsertColumn                = "insert into lists (cname, index, project_id) values($1,$2,$3) RETURNING id"
-	GetMaxColumnIndex           = "select MAX (lists.index) from projects prj left join lists lists on lists.project_id = prj.id where prj.user_id = $1 and lists.project_id = $2"
-	GetAllUsersColumnsByProject = "select lists.id, lists.cname, lists.index, lists.created_at from projects prj left join lists lists on lists.project_id = prj.id where prj.user_id = $1 and lists.project_id = $2"
+	GetMaxColumnIndex           = "select MAX (lists.index) from projects left join lists on lists.project_id = projects.id where projects.user_id = $1 and lists.project_id = $2"
+	GetAllUsersColumnsByProject = "select lists.id, lists.cname, lists.index, lists.created_at from projects left join lists on lists.project_id = projects.id where projects.user_id = $1 and lists.project_id = $2"
+	GetColumnById               = "select lists.id, lists.cname, lists.index, lists.created_at from projects left join lists on lists.project_id = projects.id where projects.user_id = $1 and lists.project_id = $2 and lists.id = $3"
+	GetColumnIndexById          = "select lists.index from projects left join lists on lists.project_id = projects.id where projects.user_id = $1 and lists.project_id = $2 and lists.id = $3"
+	IncrementColumnIndexes      = "update lists set index = index + 1 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.index >= $3 and lists.index < $4"
+	DecrementColumnIndexes      = "update lists set index = index - 1 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.index <= $3 and lists.index > $4"
+	UpdateColumnIndex           = "update lists set index = $4 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.id = $3"
 )
 
 // Database variables

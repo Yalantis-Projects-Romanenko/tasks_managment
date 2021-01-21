@@ -26,7 +26,7 @@ func CreateColumn(userId, projectId string, column models.Column, ctx context.Co
 	}
 
 	// create column
-	err = tx.QueryRowContext(ctx, database.InsertColumn, "Default", index+1, projectId).Scan(&columnId) // TODO set default column name via config
+	err = tx.QueryRowContext(ctx, database.InsertColumn, column.Name, index+1, projectId).Scan(&columnId) // TODO set default column name via config
 	if err != nil {
 		// rollback if error
 		tx.Rollback()
