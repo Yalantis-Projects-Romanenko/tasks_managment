@@ -12,13 +12,6 @@ goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=
 go run main.go
 ```
 
-## TODO
- - use transactions in database queries
- - use context through all request flow
- - cover with tests
- - handle not found requests
-
-
 ## Goose usage
 add migration example:
 ```
@@ -30,6 +23,22 @@ add migration example:
 here is a link to postman collection:
 https://www.getpostman.com/collections/88178d2e6247dadef6b4
 
-
 ## Authorization
 To make request authorized, it should have `Authorization` header with `base64` encoded username there. Username can contain only letters and numbers.
+
+
+## TODO
+- use transactions in database queries
+- use context through all request flow
+- handle not found requests
+- Update column
+- Get Columns
+- Create Task
+- update task
+- get tasks by column
+- Create Comment
+- delete task (remove comments)
+- delete column (remove tasks and comments, align indexes)
+- delete project  (remove columns, tasks and comments)
+- cover with tests
+
