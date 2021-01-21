@@ -6,11 +6,13 @@ import (
 	"time"
 )
 
+const GetAllUsersProjects = "select id, pname, pdescription, created_at from projects where user_id = $1"
+
 func GetAllByUserId(userId string) (projects []models.Project, err error) {
 	db := database.GetConn()
 	defer db.Close()
 
-	rows, err := db.Query("select id, pname, pdescription, created_at from projects where user_id = $1", userId)
+	rows, err := db.Query(GetAllUsersProjects, userId)
 
 	if err != nil {
 		return
