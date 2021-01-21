@@ -36,7 +36,9 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := projects.Insert(userId, project)
+	project.UserId = userId
+
+	id, err := projects.Insert(project)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return

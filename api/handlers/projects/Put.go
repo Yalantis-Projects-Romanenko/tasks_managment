@@ -41,7 +41,8 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	}
 
 	project.Id = id
-	affected, err := projects.Update(userId, project)
+	project.UserId = userId
+	affected, err := projects.Update(project)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
