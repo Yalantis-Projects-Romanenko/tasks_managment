@@ -1,12 +1,9 @@
 package logger
 
 import (
-"context"
+	"context"
 	"github.com/fdistorted/task_managment/config"
 	"go.uber.org/zap"
-
-	//lgr "github.com/eugeneradionov/logger"
-//	reqContext "go.uber.org/zap"
 )
 
 const requestIDKey = "request_id"
@@ -44,4 +41,3 @@ func GetRequestID(ctx context.Context) (value string) {
 func WithRequestID(ctx context.Context, value string) context.Context {
 	return context.WithValue(ctx, requestIDKey, value)
 }
-
