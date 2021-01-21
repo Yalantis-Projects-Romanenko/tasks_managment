@@ -17,6 +17,7 @@ func NewDb(postgres config.Postgres) {
 	connString = fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=disable", postgres.Host, postgres.Port, postgres.Database, postgres.User, postgres.Password)
 
 	logger.Get().Info(connString)
+	GetConn()
 }
 
 func GetConn() *sql.DB {
