@@ -38,8 +38,9 @@ func Post(w http.ResponseWriter, r *http.Request) {
 
 	project.UserId = userId
 
-	id, err := projects.Insert(project)
+	id, err := projects.CreateProject(project, r.Context())
 	if err != nil {
+		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}

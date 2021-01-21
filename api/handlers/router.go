@@ -26,19 +26,18 @@ func NewRouter() *mux.Router {
 	projectsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
 	projectsRouter.HandleFunc("/", projects.GetAll).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/", projects.Post).Methods(http.MethodPost)
-	projectsRouter.HandleFunc("/{id}/", projects.Get).Methods(http.MethodGet)
-	projectsRouter.HandleFunc("/{id}/", projects.Delete).Methods(http.MethodDelete)
-	projectsRouter.HandleFunc("/{id}/", projects.Put).Methods(http.MethodPut)
-
-	columnsRouter := r.PathPrefix("/columns").Subrouter()
-	columnsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
-	columnsRouter.HandleFunc("/{id}/", columns.Get).Methods(http.MethodGet)
+	projectsRouter.HandleFunc("/{projectId}/", projects.Get).Methods(http.MethodGet)
+	projectsRouter.HandleFunc("/{projectId}/", projects.Delete).Methods(http.MethodDelete)
+	projectsRouter.HandleFunc("/{projectId}/", projects.Put).Methods(http.MethodPut)
+	//columns part
+	projectsRouter.HandleFunc("/{projectId}/columns/", columns.GetAll).Methods(http.MethodGet)
+	projectsRouter.HandleFunc("/{projectId}/columns/", columns.Post).Methods(http.MethodPost)
 
 	//tasksRouter := r.PathPrefix("/tasks").Subrouter()
-	//tasksRouter.HandleFunc("/{id}/", tasks.Get).Methods(http.MethodGet)
+	//tasksRouter.HandleFunc("/ {projectId}/", tasks.Get).Methods(http.MethodGet)
 
 	//commentsRouter := r.PathPrefix("/comments").Subrouter()
-	//commentsRouter.HandleFunc("/{id}/", comments.Get).Methods(http.MethodGet)
+	//commentsRouter.HandleFunc("/ {projectId}/", comments.Get).Methods(http.MethodGet)
 
 	return r
 }

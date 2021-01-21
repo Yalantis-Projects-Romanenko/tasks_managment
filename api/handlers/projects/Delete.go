@@ -12,14 +12,14 @@ import (
 
 func Delete(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["id"]
+	projectId := vars["projectId"]
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
 		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
 		return
 	}
 
-	affected, err := projects2.DeleteById(userId, id)
+	affected, err := projects2.DeleteById(userId, projectId)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return

@@ -6,14 +6,12 @@ import (
 	"time"
 )
 
-const GetAllUsersProjects = "select id, pname, pdescription, created_at from projects where user_id = $1"
-
 func GetAllByUserId(userId string) (projects []models.Project, err error) {
+	projects = make([]models.Project, 0) //TODO use this thing in all requests or check it with mentor
 	db := database.GetConn()
 	defer db.Close()
 
-	rows, err := db.Query(GetAllUsersProjects, userId)
-
+	rows, err := db.Query(database.GetAllUsersProjects, userId)
 	if err != nil {
 		return
 	}
@@ -22,21 +20,17 @@ func GetAllByUserId(userId string) (projects []models.Project, err error) {
 
 	for rows.Next() {
 		var id, pname, pdescription string
-		var created_at time.Time
-
-		err = rows.Scan(&id, &pname, &pdescription, &created_at)
-
+		var createdAt time.Time
+		err = rows.Scan(&id, &pname, &pdescription, &createdAt)
 		if err != nil {
 			return
 		}
-
 		projects = append(projects, models.Project{
 			Id:          id,
 			Name:        pname,
 			Description: pdescription,
-			Created:     created_at,
+			Created:     createdAt,
 		})
-
 	}
 
 	return projects, err

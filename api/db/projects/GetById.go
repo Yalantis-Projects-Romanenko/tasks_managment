@@ -5,8 +5,6 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-const GetProjectById = "select id, pname, pdescription, created_at from projects where user_id = $1 and id = $2"
-
 func GetById(userId, projectId string) (*models.Project, error) {
 	db := database.GetConn()
 	defer db.Close()
@@ -14,7 +12,7 @@ func GetById(userId, projectId string) (*models.Project, error) {
 	// create a user of models.User type
 	var project models.Project
 
-	row := db.QueryRow(GetProjectById, userId, projectId)
+	row := db.QueryRow(database.GetProjectById, userId, projectId)
 
 	// unmarshal the row object to user
 	err := row.Scan(&project.Id, &project.Name, &project.Description, &project.Created)

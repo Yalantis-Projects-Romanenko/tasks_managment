@@ -6,8 +6,5 @@ import (
 )
 
 func Get(w http.ResponseWriter, r *http.Request) {
-	//vars := mux.Vars(r)
-	//id := vars["id"]
-
 	common.SendResponse(w, http.StatusInternalServerError, "not implemented yet")
 }
