@@ -1,5 +1,6 @@
 -- +goose Up
 -- SQL in this section is executed when the migration is applied.
+--update tasks
 ALTER TABLE tasks
     ADD COLUMN project_Id UUID;
 
@@ -8,9 +9,10 @@ SET project_Id = lists.project_Id
 FROM lists
 WHERE lists.id = tasks.column_id;
 
-ALTER TABLE lists
+ALTER TABLE tasks
     ALTER COLUMN project_id SET NOT NULL;
 
+--update comments
 ALTER TABLE comments
     ADD COLUMN project_Id UUID;
 
