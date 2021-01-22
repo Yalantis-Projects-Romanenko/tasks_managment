@@ -24,7 +24,12 @@ add migration example:
 ```
 curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.2
 golangci-lint --version
+cd api
+golangci-lint run
 ```
+
+cd
+
 ## Check it out using Postman
 here is a link to postman collection:
 https://www.getpostman.com/collections/88178d2e6247dadef6b4
