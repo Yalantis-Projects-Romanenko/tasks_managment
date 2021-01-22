@@ -28,8 +28,6 @@ To make request authorized, it should have `Authorization` header with `base64` 
 
 
 ## TODO
-- use transactions in database queries
-- use context through all request flow
 - handle not found requests
 - Update column
 - Get Columns
@@ -37,8 +35,6 @@ To make request authorized, it should have `Authorization` header with `base64` 
 - update task
 - get tasks by column
 - Create Comment
-- delete task (remove comments)
-- delete column (remove tasks and comments, align indexes)
-- delete project  (remove columns, tasks and comments)
+- delete task
 - cover with tests
 

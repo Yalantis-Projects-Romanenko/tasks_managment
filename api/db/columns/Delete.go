@@ -5,7 +5,6 @@ import (
 	database "github.com/fdistorted/task_managment/db"
 )
 
-// TODO remove tasks and comments
 func DeleteById(userId, projectId, columnId string, ctx context.Context) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()

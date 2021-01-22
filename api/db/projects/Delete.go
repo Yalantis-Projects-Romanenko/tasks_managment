@@ -5,7 +5,6 @@ import (
 	database "github.com/fdistorted/task_managment/db"
 )
 
-// TODO implement removing of all the rest
 func DeleteById(userId, projectId string, ctx context.Context) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()
