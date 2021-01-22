@@ -6,7 +6,7 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-func GetById(userId, projectId string, ctx context.Context) (*models.Project, error) {
+func GetById(ctx context.Context, userId, projectId string) (*models.Project, error) {
 	db := database.GetConn()
 	defer db.Close()
 

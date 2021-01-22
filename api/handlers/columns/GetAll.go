@@ -20,7 +20,7 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
 
-	gotColumns, err := columns.GetAll(userId, projectId, r.Context())
+	gotColumns, err := columns.GetAll(r.Context(), userId, projectId)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)

@@ -7,7 +7,7 @@ import (
 )
 
 // ChangeIndex moves column inside of a project
-func ChangeIndex(userId, projectId, columnId string, index int64, ctx context.Context) (err error) {
+func ChangeIndex(ctx context.Context, userId, projectId, columnId string, index int64) (err error) {
 	db := database.GetConn()
 	defer db.Close()
 

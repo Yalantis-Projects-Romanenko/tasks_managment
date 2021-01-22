@@ -16,7 +16,7 @@ func Get(w http.ResponseWriter, r *http.Request) {
 		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
 		return
 	}
-	project, err := projects2.GetById(userId, projectId, r.Context())
+	project, err := projects2.GetById(r.Context(), userId, projectId)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return

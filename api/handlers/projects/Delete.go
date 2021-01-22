@@ -19,7 +19,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	affected, err := projects2.DeleteById(userId, projectId, r.Context())
+	affected, err := projects2.DeleteById(r.Context(), userId, projectId)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return

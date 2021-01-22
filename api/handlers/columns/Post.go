@@ -1,8 +1,11 @@
 package columns
 
 import (
+	"database/sql"
 	"encoding/json"
-	"github.com/fdistorted/task_managment/db/columns"
+	"errors"
+	dbColumns "github.com/fdistorted/task_managment/db/columns"
+	dbProjects "github.com/fdistorted/task_managment/db/projects"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/logger"
@@ -40,7 +43,17 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
 
-	columnId, err := columns.CreateColumn(userId, projectId, column, r.Context())
+	_, err = dbProjects.GetById(r.Context(), userId, projectId)
+	if err != nil {
+		if errors.Is(sql.ErrNoRows, err) {
+			common.SendResponse(w, http.StatusNotFound, common.ResourceIsNotOwned)
+		}
+		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
+		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		return
+	}
+
+	columnId, err := dbColumns.CreateColumn(r.Context(), userId, projectId, column)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)

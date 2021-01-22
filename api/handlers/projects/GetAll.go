@@ -17,7 +17,7 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	projects, err := projects2.GetAllByUserId(userId, r.Context())
+	projects, err := projects2.GetAllByUserId(r.Context(), userId)
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return

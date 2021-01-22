@@ -12,7 +12,7 @@ import (
 const (
 	DeleteProject       = `DELETE FROM projects WHERE user_id=$1 and id=$2`
 	GetAllUsersProjects = "select id, pname, pdescription, created_at from projects where user_id = $1"
-	GetProjectById      = "select id, pname, pdescription, created_at from projects where user_id = $1 and id = $2"
+	GetProjectById      = "select id, pname, pdescription, created_at from projects where user_id = $1 and id = $2 limit 1"
 	InsertProject       = "insert into projects (pname, pdescription, user_id) values($1,$2,$3) RETURNING id"
 	UpdateProject       = `UPDATE projects SET pname=$3, pdescription=$4 WHERE user_id=$1 and id=$2`
 

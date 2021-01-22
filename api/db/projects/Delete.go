@@ -5,7 +5,7 @@ import (
 	database "github.com/fdistorted/task_managment/db"
 )
 
-func DeleteById(userId, projectId string, ctx context.Context) (int64, error) {
+func DeleteById(ctx context.Context, userId, projectId string) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()
 

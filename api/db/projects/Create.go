@@ -9,7 +9,7 @@ import (
 )
 
 //TODO use context in database queries
-func CreateProject(project models.Project, ctx context.Context) (id string, err error) {
+func CreateProject(ctx context.Context, project models.Project) (id string, err error) {
 	db := database.GetConn()
 	defer db.Close()
 

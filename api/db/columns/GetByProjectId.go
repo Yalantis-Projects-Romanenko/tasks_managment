@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func GetAll(userId, projectId string, ctx context.Context) (columns []models.Column, err error) {
+func GetAll(ctx context.Context, userId, projectId string) (columns []models.Column, err error) {
 	columns = make([]models.Column, 0)
 	db := database.GetConn()
 	defer db.Close()

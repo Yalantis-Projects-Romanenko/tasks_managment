@@ -41,7 +41,7 @@ func Move(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
 
-	err = columns.ChangeIndex(userId, projectId, column.Id, column.Index, r.Context())
+	err = columns.ChangeIndex(r.Context(), userId, projectId, column.Id, column.Index)
 	if err != nil {
 		if database.ErrInvalidParameters.Is(err) {
 			common.SendResponse(w, http.StatusBadRequest, err.Error())

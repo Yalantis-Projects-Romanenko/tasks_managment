@@ -6,7 +6,7 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-func CreateColumn(userId, projectId string, column models.Column, ctx context.Context) (columnId string, err error) {
+func CreateColumn(ctx context.Context, userId, projectId string, column models.Column) (columnId string, err error) {
 	db := database.GetConn()
 	defer db.Close()
 

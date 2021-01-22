@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func GetAllByUserId(userId string, ctx context.Context) (projects []models.Project, err error) {
+func GetAllByUserId(ctx context.Context, userId string) (projects []models.Project, err error) {
 	projects = make([]models.Project, 0) //TODO use this thing in all requests or check it with mentor
 	db := database.GetConn()
 	defer db.Close()

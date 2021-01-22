@@ -6,7 +6,7 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-func Update(project models.Project, ctx context.Context) (int64, error) {
+func Update(ctx context.Context, project models.Project) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()
 
