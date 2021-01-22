@@ -17,6 +17,7 @@ add migration example:
 ```
  goose -dir ./migrations create initial sql
  goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" up
+ goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" down-to 20210114124747
 ```
 
 ## Check it out using Postman

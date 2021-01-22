@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS lists
 CREATE TABLE IF NOT EXISTS tasks
 (
     id          UUID               DEFAULT uuid_generate_v4(),
+
     column_id   UUID      NOT NULL,
     title       varchar   NOT NULL,
     description varchar   NOT NULL,
