@@ -1,17 +1,18 @@
 package columns
 
 import (
+	"context"
 	database "github.com/fdistorted/task_managment/db"
 	"github.com/fdistorted/task_managment/models"
 	"time"
 )
 
-func GetAll(userId, projectId string) (columns []models.Column, err error) {
+func GetAll(userId, projectId string, ctx context.Context) (columns []models.Column, err error) {
 	columns = make([]models.Column, 0)
 	db := database.GetConn()
 	defer db.Close()
 
-	rows, err := db.Query(database.GetAllUsersColumnsByProject, userId, projectId)
+	rows, err := db.QueryContext(ctx, database.GetAllUsersColumnsByProject, userId, projectId)
 
 	if err != nil {
 		return

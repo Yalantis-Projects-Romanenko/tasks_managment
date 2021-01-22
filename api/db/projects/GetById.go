@@ -1,18 +1,19 @@
 package projects
 
 import (
+	"context"
 	database "github.com/fdistorted/task_managment/db"
 	"github.com/fdistorted/task_managment/models"
 )
 
-func GetById(userId, projectId string) (*models.Project, error) {
+func GetById(userId, projectId string, ctx context.Context) (*models.Project, error) {
 	db := database.GetConn()
 	defer db.Close()
 
 	// create a user of models.User type
 	var project models.Project
 
-	row := db.QueryRow(database.GetProjectById, userId, projectId)
+	row := db.QueryRowContext(ctx, database.GetProjectById, userId, projectId)
 
 	// unmarshal the row object to user
 	err := row.Scan(&project.Id, &project.Name, &project.Description, &project.Created)

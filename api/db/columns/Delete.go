@@ -1,15 +1,17 @@
 package columns
 
 import (
+	"context"
 	database "github.com/fdistorted/task_managment/db"
 )
 
-func DeleteById(userId, projectId, columnId string) (int64, error) {
+// TODO remove tasks and comments
+func DeleteById(userId, projectId, columnId string, ctx context.Context) (int64, error) {
 	db := database.GetConn()
 	defer db.Close()
 
 	// execute the sql statement
-	res, err := db.Exec(database.DeleteColumnById, userId, projectId, columnId)
+	res, err := db.ExecContext(ctx, database.DeleteColumnById, userId, projectId, columnId)
 	if err != nil {
 		return 0, err
 	}

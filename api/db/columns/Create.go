@@ -6,7 +6,6 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-//TODO use context in database queries
 func CreateColumn(userId, projectId string, column models.Column, ctx context.Context) (columnId string, err error) {
 	db := database.GetConn()
 	defer db.Close()

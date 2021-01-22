@@ -21,7 +21,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	affected, err := columns.DeleteById(userId, projectId, columnId)
+	affected, err := columns.DeleteById(userId, projectId, columnId, r.Context())
 	if err != nil {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
