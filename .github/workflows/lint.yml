@@ -22,6 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: go get ./...
       - name: Run golangci-lint
         uses: actions-contrib/golangci-lint@v1
 
