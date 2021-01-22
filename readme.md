@@ -20,6 +20,11 @@ add migration example:
  goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" down-to 20210114124747
 ```
 
+## Linter Usage
+```
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.2
+golangci-lint --version
+```
 ## Check it out using Postman
 here is a link to postman collection:
 https://www.getpostman.com/collections/88178d2e6247dadef6b4

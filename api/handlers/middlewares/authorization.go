@@ -11,8 +11,12 @@ import (
 	"unicode"
 )
 
-const authorizationHeader = "Authorization"
-const UserIdFieldName = "user_id"
+type UserIdField string
+
+const (
+	authorizationHeader             = "Authorization"
+	UserIdFieldName     UserIdField = "user_id"
+)
 
 // AuthToken gets the auth token from the context.
 func GetUserID(ctx context.Context) (string, bool) {
@@ -60,7 +64,7 @@ func Authorize(next http.Handler) http.Handler {
 				return
 			}
 
-			logger.WithCtxValue(r.Context()).Debug("got user id", zap.String(UserIdFieldName, username))
+			logger.WithCtxValue(r.Context()).Debug("got user id", zap.String(string(UserIdFieldName), username))
 			ctx = context.WithValue(ctx, UserIdFieldName, username)
 
 			next.ServeHTTP(w, r.WithContext(ctx))

@@ -18,11 +18,11 @@ func CreateProject(ctx context.Context, project models.Project) (id string, err 
 		return
 	}
 
+	defer database.RollbackWithHandler(ctx, tx)
+
 	// create project
 	err = tx.QueryRowContext(ctx, database.InsertProject, project.Name, project.Description, project.UserId).Scan(&id)
 	if err != nil {
-		// rollback if error
-		tx.Rollback()
 		return
 	}
 
@@ -30,8 +30,6 @@ func CreateProject(ctx context.Context, project models.Project) (id string, err 
 	// create column
 	err = tx.QueryRowContext(ctx, database.InsertColumn, "Default", 0, id).Scan(&columnId) // TODO set default column name via config
 	if err != nil {
-		// rollback if error
-		tx.Rollback()
 		return
 	}
 

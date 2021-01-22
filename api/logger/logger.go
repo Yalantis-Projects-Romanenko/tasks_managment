@@ -6,7 +6,9 @@ import (
 	"go.uber.org/zap"
 )
 
-const requestIDKey = "request_id"
+type RequestIdType string
+
+const requestIDKey RequestIdType = "request_id"
 
 var logger *zap.Logger
 
@@ -25,7 +27,7 @@ func WithCtxValue(ctx context.Context) *zap.Logger {
 
 func zapFieldsFromContext(ctx context.Context) []zap.Field {
 	return []zap.Field{
-		zap.String(requestIDKey, GetRequestID(ctx)),
+		zap.String(string(requestIDKey), GetRequestID(ctx)),
 	}
 }
 

@@ -65,5 +65,4 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	logger.WithCtxValue(r.Context()).Info("New record ID is:", zap.String("projectId", columnId))
 
 	common.SendResponse(w, http.StatusOK, "column created") // todo change response accrding to rest
-	return
 }

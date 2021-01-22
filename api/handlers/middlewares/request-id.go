@@ -6,7 +6,9 @@ import (
 	"net/http"
 )
 
-const requestIDHeader = "X-Request-Id"
+const (
+	requestIDHeader = "X-Request-Id"
+)
 
 func RequestID(next http.Handler) http.Handler {
 	return http.HandlerFunc(

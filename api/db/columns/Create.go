@@ -15,20 +15,18 @@ func CreateColumn(ctx context.Context, userId, projectId string, column models.C
 		return
 	}
 
+	defer database.RollbackWithHandler(ctx, tx)
+
 	var index int
 	// get list max index
 	err = tx.QueryRowContext(ctx, database.GetMaxColumnIndex, userId, projectId).Scan(&index)
 	if err != nil {
-		// rollback if error
-		tx.Rollback()
 		return
 	}
 
 	// create column
 	err = tx.QueryRowContext(ctx, database.InsertColumn, column.Name, index+1, projectId).Scan(&columnId) // TODO set default column name via config
 	if err != nil {
-		// rollback if error
-		tx.Rollback()
 		return
 	}
 
