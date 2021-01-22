@@ -29,8 +29,6 @@ To make request authorized, it should have `Authorization` header with `base64` 
 
 ## TODO
 - handle not found requests
-- Update column
-- Get Columns
 - Create Task
 - update task
 - get tasks by column

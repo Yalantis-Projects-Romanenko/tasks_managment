@@ -34,7 +34,7 @@ func GetAll(ctx context.Context, userId, projectId string) (columns []models.Col
 		columns = append(columns, models.Column{
 			Id:      id,
 			Name:    name,
-			Index:   index,
+			Index:   &index,
 			Created: createdAt,
 		})
 

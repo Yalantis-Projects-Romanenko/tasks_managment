@@ -25,6 +25,7 @@ const (
 	DecrementColumnIndexes      = "update lists set index = index - 1 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.index <= $3 and lists.index > $4"
 	UpdateColumnIndex           = "update lists set index = $4 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.id = $3"
 	DeleteColumnById            = `DELETE FROM lists using projects WHERE lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.id = $3`
+	UpdateColumnName            = `UPDATE lists SET cname=$1 WHERE id=$2`
 )
 
 // Database variables
