@@ -19,7 +19,6 @@ func CreateProject(ctx context.Context, project models.Project) (id string, err 
 	}
 
 	defer tx.Rollback()
-
 	//defer database.RollbackWithHandler(ctx, tx)
 
 	// create project
