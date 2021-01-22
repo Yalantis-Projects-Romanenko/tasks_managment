@@ -46,4 +46,5 @@ To make request authorized, it should have `Authorization` header with `base64` 
 - Create Comment
 - delete task
 - cover with tests
+- add linter workflow to github actions
 
