@@ -41,12 +41,8 @@ To make request authorized, it should have `Authorization` header with `base64` 
 ## TODO
 
 - handle not found requests
-- adapt
-- Create Task
-- update task
-- get tasks by column
+- check if project owned in all requests (use exist)
 - Create Comment
-- delete task
 - cover with tests
 - add linter workflow to github actions
 
