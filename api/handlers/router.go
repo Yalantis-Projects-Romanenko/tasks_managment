@@ -5,6 +5,7 @@ import (
 	"github.com/fdistorted/task_managment/handlers/columns"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/handlers/projects"
+	"github.com/fdistorted/task_managment/handlers/tasks"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -21,7 +22,7 @@ func NewRouter() *mux.Router {
 		fmt.Fprintf(w, "hi there ^._.^")
 	}).Methods(http.MethodGet).Schemes("http")
 
-	// subpaths
+	// projects subrouter
 	projectsRouter := r.PathPrefix("/projects").Subrouter()
 	projectsRouter.Use(middlewares.Authorize) // enable authorization for subrouter
 	projectsRouter.HandleFunc("/", projects.GetAll).Methods(http.MethodGet)
@@ -29,11 +30,17 @@ func NewRouter() *mux.Router {
 	projectsRouter.HandleFunc("/{projectId}/", projects.Get).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/{projectId}/", projects.Delete).Methods(http.MethodDelete)
 	projectsRouter.HandleFunc("/{projectId}/", projects.Put).Methods(http.MethodPut)
-	//columns part
+
+	//columns
 	projectsRouter.HandleFunc("/{projectId}/columns/", columns.GetAll).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/{projectId}/columns/", columns.Post).Methods(http.MethodPost)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/", columns.Delete).Methods(http.MethodDelete)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/", columns.Put).Methods(http.MethodPut)
+
+	//tasks
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.Post).Methods(http.MethodPost)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.GetAll).Methods(http.MethodGet)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Put).Methods(http.MethodPut)
 
 	return r
 }

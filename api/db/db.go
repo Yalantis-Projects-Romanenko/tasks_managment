@@ -26,6 +26,16 @@ const (
 	UpdateColumnIndex           = "update lists set index = $4 from projects where lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.id = $3"
 	DeleteColumnById            = `DELETE FROM lists using projects WHERE lists.project_id = projects.id and projects.user_id = $1 and lists.project_id = $2 and lists.id = $3`
 	UpdateColumnName            = `UPDATE lists SET cname=$1 WHERE id=$2`
+
+	GetMaxTaskPriority       = "SELECT COALESCE((select MAX (priority) from tasks where tasks.column_id = $1 and tasks.project_id = $2),-1)"
+	InsertTask               = "insert into tasks (title, description, priority, project_id,column_id) values($1,$2,$3,$4,$5) RETURNING id"
+	UpdateTaskTitle          = `UPDATE tasks SET title=$1 WHERE id=$2 and project_id = $3`
+	UpdateTaskDescription    = `UPDATE tasks SET description=$1 WHERE id=$2 and project_id = $3`
+	GetTasksPriorityById     = "select priority from tasks where column_id = $1 and project_id = $2 and id = $3"
+	IncrementTasksPriorities = "update tasks set priority = priority + 1 where column_id = $1 and project_id = $2 and priority >= $3 and priority < $4"
+	DecrementTasksPriorities = "update tasks set priority = priority - 1 where column_id = $1 and project_id = $2 and priority <= $3 and priority > $4"
+	UpdateTasksPriority      = "update tasks set priority = $4 where column_id = $1 and  project_id = $2 and id = $3"
+	GetAllTasks              = "select id, title, description, priority, created_at from tasks where project_id = $1 and column_id = $2"
 )
 
 // Database variables
