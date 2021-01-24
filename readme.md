@@ -39,9 +39,9 @@ To make request authorized, it should have `Authorization` header with `base64` 
 
 
 ## TODO
-
 - handle not found requests
-- check if project owned in all requests (use exist)
+- use exist when checking project if owned by a user
+- adapt sql requests to to denormalised database
 - Create Comment
 - cover with tests
 - add linter workflow to github actions
