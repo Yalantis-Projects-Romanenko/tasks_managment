@@ -36,6 +36,7 @@ const (
 	DecrementTasksPriorities = "update tasks set priority = priority - 1 where column_id = $1 and project_id = $2 and priority <= $3 and priority > $4"
 	UpdateTasksPriority      = "update tasks set priority = $4 where column_id = $1 and  project_id = $2 and id = $3"
 	GetAllTasks              = "select id, title, description, priority, created_at from tasks where project_id = $1 and column_id = $2"
+	DeleteTaskById           = `DELETE FROM tasks WHERE project_id = $1 and column_id = $2 and id = $3`
 )
 
 // Database variables

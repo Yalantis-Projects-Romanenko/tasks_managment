@@ -41,6 +41,7 @@ func NewRouter() *mux.Router {
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.Post).Methods(http.MethodPost)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.GetAll).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Put).Methods(http.MethodPut)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Delete).Methods(http.MethodDelete)
 
 	return r
 }
