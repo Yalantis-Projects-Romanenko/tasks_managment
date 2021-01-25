@@ -39,8 +39,8 @@ func Update(ctx context.Context, column models.Column) (err error) {
 		}
 
 		if currentIndex == *column.Index {
-			tx.Commit()
-			return nil
+			err = tx.Commit()
+			return err
 			//err = database.ErrInvalidParameters.Wrap(errors.New("same index"))
 			//return
 		}
