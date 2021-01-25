@@ -1,9 +1,6 @@
 package tasks
 
 import (
-	"database/sql"
-	"errors"
-	dbProjects "github.com/fdistorted/task_managment/db/projects"
 	dbTasks "github.com/fdistorted/task_managment/db/tasks"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
@@ -25,14 +22,7 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 	columnId := vars["columnId"]
 
 	// check if project exist and owned by a user
-	_, err := dbProjects.GetById(r.Context(), userId, projectId)
-	if err != nil {
-		if errors.Is(sql.ErrNoRows, err) {
-			common.SendResponse(w, http.StatusNotFound, common.ResourceIsNotOwned)
-			return
-		}
-		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
-		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+	if !common.CheckIfUserExists(w, r, userId, projectId) {
 		return
 	}
 

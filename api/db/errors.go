@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 	"github.com/fdistorted/task_managment/logger"
 	"strings"
@@ -40,7 +41,7 @@ func (err wrapError) Is(target error) bool {
 
 func RollbackWithHandler(ctx context.Context, tx *sql.Tx) {
 	err := tx.Rollback()
-	if err != nil {
+	if err != nil && !errors.Is(err, sql.ErrTxDone) {
 		logger.WithCtxValue(ctx).Error("failed to rollback db transaction") //todo handle it in more inteligent way
 	}
 }

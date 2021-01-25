@@ -6,7 +6,7 @@ import (
 	"github.com/fdistorted/task_managment/models"
 )
 
-func CreateColumn(ctx context.Context, userId, projectId string, column models.Column) (columnId string, err error) {
+func CreateColumn(ctx context.Context, column models.Column) (columnId string, err error) {
 	db := database.GetConn()
 	defer db.Close()
 
@@ -19,13 +19,13 @@ func CreateColumn(ctx context.Context, userId, projectId string, column models.C
 
 	var index int
 	// get list max index
-	err = tx.QueryRowContext(ctx, database.GetMaxColumnIndex, userId, projectId).Scan(&index)
+	err = tx.QueryRowContext(ctx, database.GetMaxColumnIndex, column.ProjectId).Scan(&index)
 	if err != nil {
 		return
 	}
 
 	// create column
-	err = tx.QueryRowContext(ctx, database.InsertColumn, column.Name, index+1, projectId).Scan(&columnId) // TODO set default column name via config
+	err = tx.QueryRowContext(ctx, database.InsertColumn, column.Name, index+1, column.ProjectId).Scan(&columnId) // TODO set default column name via config
 	if err != nil {
 		return
 	}

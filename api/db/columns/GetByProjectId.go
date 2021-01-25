@@ -7,12 +7,12 @@ import (
 	"time"
 )
 
-func GetAll(ctx context.Context, userId, projectId string) (columns []models.Column, err error) {
+func GetAll(ctx context.Context, projectId string) (columns []models.Column, err error) {
 	columns = make([]models.Column, 0)
 	db := database.GetConn()
 	defer db.Close()
 
-	rows, err := db.QueryContext(ctx, database.GetAllUsersColumnsByProject, userId, projectId)
+	rows, err := db.QueryContext(ctx, database.GetAllUsersColumnsByProject, projectId)
 
 	if err != nil {
 		return
