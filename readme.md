@@ -41,4 +41,3 @@ To make request authorized, it should have `Authorization` header with `base64` 
 ## TODO
 - handle not found requests
 - cover with tests
-- return more useful info on create requests
