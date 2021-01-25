@@ -42,7 +42,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	columnId := vars["columnId"]
 
 	// check if project exist and owned by a user
-	if !common.CheckIfUserExists(w, r, userId, projectId) {
+	if !common.CheckUsersProperty(w, r, userId, projectId) {
 		return
 	}
 

@@ -1,8 +1,8 @@
-package columns
+package comments
 
 import (
 	"encoding/json"
-	dbColumns "github.com/fdistorted/task_managment/db/columns"
+	dbComments "github.com/fdistorted/task_managment/db/comments"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/logger"
@@ -20,17 +20,17 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var column models.Column
+	var comment models.Comment
 
-	// decode the json request to column
-	err := json.NewDecoder(r.Body).Decode(&column)
+	// decode the json request to comment
+	err := json.NewDecoder(r.Body).Decode(&comment)
 	if err != nil {
 		common.SendResponse(w, http.StatusBadRequest, common.FailedToParseJson)
 		return
 	}
 
 	validate := vld.Get()
-	err = validate.Struct(column)
+	err = validate.Struct(comment)
 	if err != nil {
 		errors := vld.ParseValidationErrors(err)
 		common.SendResponse(w, http.StatusUnprocessableEntity, errors)
@@ -39,14 +39,18 @@ func Post(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
+	//columnId := vars["columnId"]
+	taskId := vars["taskId"]
 
 	// check if project exist and owned by a user
 	if !common.CheckUsersProperty(w, r, userId, projectId) {
 		return
 	}
 
-	column.ProjectId = projectId
-	columnId, err := dbColumns.CreateColumn(r.Context(), column)
+	comment.ProjectId = projectId
+	comment.TaskId = taskId
+	comment.UserId = userId
+	columnId, err := dbComments.CreateComment(r.Context(), comment)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
@@ -55,5 +59,5 @@ func Post(w http.ResponseWriter, r *http.Request) {
 
 	logger.WithCtxValue(r.Context()).Info("New record ID is:", zap.String("projectId", columnId))
 
-	common.SendResponse(w, http.StatusOK, "column created") // todo change response accrding to rest
+	common.SendResponse(w, http.StatusOK, "comment created") // todo change response accrding to rest
 }

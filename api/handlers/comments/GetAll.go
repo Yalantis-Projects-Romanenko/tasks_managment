@@ -1,7 +1,7 @@
-package columns
+package comments
 
 import (
-	"github.com/fdistorted/task_managment/db/columns"
+	"github.com/fdistorted/task_managment/db/comments"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/logger"
@@ -19,19 +19,20 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
+	taskId := vars["taskId"]
 
 	// check if project exist and owned by a user
 	if !common.CheckUsersProperty(w, r, userId, projectId) {
 		return
 	}
 
-	gotColumns, err := columns.GetAll(r.Context(), projectId)
+	gotComments, err := comments.GetAll(r.Context(), projectId, taskId)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
 
-	logger.WithCtxValue(r.Context()).Info("got gotColumns from the database ", zap.Int("columns_len", len(gotColumns)))
-	common.SendResponse(w, http.StatusOK, gotColumns)
+	logger.WithCtxValue(r.Context()).Info("got gotComments from the database ", zap.Int("columns_len", len(gotComments)))
+	common.SendResponse(w, http.StatusOK, gotComments)
 }

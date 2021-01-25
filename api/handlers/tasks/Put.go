@@ -34,15 +34,14 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if project exist and owned by a user
-	if !common.CheckIfUserExists(w, r, userId, projectId) {
+	if !common.CheckUsersProperty(w, r, userId, projectId) {
 		return
 	}
 
 	task.Id = taskId
 	task.ProjectId = projectId
-	task.ColumnId = columnId
 
-	err = dbTasks.Update(r.Context(), task)
+	err = dbTasks.Update(r.Context(), columnId, task)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)

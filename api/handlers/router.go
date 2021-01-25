@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/fdistorted/task_managment/handlers/columns"
+	"github.com/fdistorted/task_managment/handlers/comments"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
 	"github.com/fdistorted/task_managment/handlers/projects"
 	"github.com/fdistorted/task_managment/handlers/tasks"
@@ -36,12 +37,19 @@ func NewRouter() *mux.Router {
 	projectsRouter.HandleFunc("/{projectId}/columns/", columns.Post).Methods(http.MethodPost)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/", columns.Delete).Methods(http.MethodDelete)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/", columns.Put).Methods(http.MethodPut)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/", columns.Get).Methods(http.MethodGet)
 
 	//tasks
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.Post).Methods(http.MethodPost)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/", tasks.GetAll).Methods(http.MethodGet)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Put).Methods(http.MethodPut)
 	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Delete).Methods(http.MethodDelete)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/", tasks.Get).Methods(http.MethodGet)
+
+	//comments
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/comments/", comments.Post).Methods(http.MethodPost)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/comments/", comments.GetAll).Methods(http.MethodGet)
+	projectsRouter.HandleFunc("/{projectId}/columns/{columnId}/tasks/{taskId}/comments/{commentId}/", comments.Get).Methods(http.MethodGet)
 
 	return r
 }

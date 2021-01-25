@@ -30,7 +30,7 @@ func SendRawResponse(w http.ResponseWriter, statusCode int, binBody []byte) {
 	}
 }
 
-func CheckIfUserExists(w http.ResponseWriter, r *http.Request, userId, projectId string) bool {
+func CheckUsersProperty(w http.ResponseWriter, r *http.Request, userId, projectId string) bool {
 	// check if project exist and owned by a user
 	exists, err := dbProjects.Exists(r.Context(), userId, projectId)
 	if err != nil {

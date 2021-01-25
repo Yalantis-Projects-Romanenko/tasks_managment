@@ -20,7 +20,7 @@ const (
 	InsertColumn                   = "insert into lists (cname, index, project_id) values($1,$2,$3) RETURNING id"
 	GetMaxColumnIndex              = "select MAX (index) from lists where project_id = $1"
 	GetAllUsersColumnsByProject    = "select id, cname, index, created_at from lists where project_id = $1"
-	GetColumnById                  = "select id, cname, index, created_at from  lists where project_id = $1 and id = $2"
+	GetColumnById                  = "select id, cname, index, created_at from lists where project_id = $1 and id = $2"
 	GetColumnIndexById             = "select index from lists where project_id = $1 and id = $2"
 	IncrementColumnIndexes         = "update lists set index = index + 1 where project_id = $1 and index >= $2 and index < $3"
 	DecrementColumnIndexes         = "update lists set index = index - 1 where project_id = $1 and index <= $2 and index > $3"
@@ -31,15 +31,22 @@ const (
 
 	GetMaxTaskPriority               = "SELECT COALESCE((select MAX (priority) from tasks where tasks.column_id = $1 and tasks.project_id = $2),-1)"
 	InsertTask                       = "insert into tasks (title, description, priority, project_id,column_id) values($1,$2,$3,$4,$5) RETURNING id"
-	UpdateTaskTitle                  = `UPDATE tasks SET title=$1 WHERE id=$2 and project_id = $3`
-	UpdateTaskDescription            = `UPDATE tasks SET description=$1 WHERE id=$2 and project_id = $3`
+	UpdateTaskTitle                  = `UPDATE tasks SET title=$1 WHERE id=$2 and project_id = $3  and column_id = $4`
+	UpdateTaskColumnAndPriority      = `UPDATE tasks SET column_id=$1, priority=$2 WHERE id=$3 and project_id = $4`
+	UpdateTaskDescription            = `UPDATE tasks SET description=$1 WHERE id=$2 and project_id = $3  and column_id = $4`
 	GetTasksPriorityById             = "select priority from tasks where column_id = $1 and project_id = $2 and id = $3"
 	IncrementTasksPriorities         = "update tasks set priority = priority + 1 where column_id = $1 and project_id = $2 and priority >= $3 and priority < $4"
 	DecrementTasksPriorities         = "update tasks set priority = priority - 1 where column_id = $1 and project_id = $2 and priority <= $3 and priority > $4"
 	DecrementTasksPrioritiesOnDelete = "update tasks set priority = priority - 1 where project_id = $1 and column_id = $2 and priority >= $3"
+	IncrementTasksPrioritiesOnMove   = "update tasks set priority = priority + 1 where project_id = $1 and column_id = $2 and priority >= $3"
 	UpdateTasksPriority              = "update tasks set priority = $4 where column_id = $1 and  project_id = $2 and id = $3"
 	GetAllTasks                      = "select id, title, description, priority, created_at from tasks where project_id = $1 and column_id = $2"
 	DeleteTaskById                   = `DELETE FROM tasks WHERE project_id = $1 and column_id = $2 and id = $3 returning priority`
+	GetTaskById                      = "select id, title, description, priority, created_at from tasks where project_id = $1 and column_id = $2 and id = $3 limit 1"
+
+	InsertComment           = "insert into comments (project_id, task_id, username, content) values($1,$2,$3,$4) RETURNING id"
+	GetAllCommentsOfTheTask = "select id, username, content, created_at from comments where project_id = $1 and task_id = $2"
+	GetCommentById          = "select id, username, content, created_at from comments where project_id = $1 and task_id = $2 and id = $3 limit 1"
 )
 
 // Database variables
