@@ -53,7 +53,8 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	logger.WithCtxValue(r.Context()).Info("New record ID is:", zap.String("taskId", taskId))
+	task.Id = taskId
 
-	common.SendResponse(w, http.StatusOK, "task created") // todo change response accrding to rest
+	logger.WithCtxValue(r.Context()).Info("created task", zap.Any("task", task))
+	common.SendResponse(w, http.StatusOK, task)
 }

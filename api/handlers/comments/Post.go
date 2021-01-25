@@ -39,7 +39,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	projectId := vars["projectId"]
-	//columnId := vars["columnId"]
+	//commentId := vars["commentId"]
 	taskId := vars["taskId"]
 
 	// check if project exist and owned by a user
@@ -50,14 +50,14 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	comment.ProjectId = projectId
 	comment.TaskId = taskId
 	comment.UserId = userId
-	columnId, err := dbComments.CreateComment(r.Context(), comment)
+	commentId, err := dbComments.CreateComment(r.Context(), comment)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
 
-	logger.WithCtxValue(r.Context()).Info("New record ID is:", zap.String("projectId", columnId))
-
-	common.SendResponse(w, http.StatusOK, "comment created") // todo change response accrding to rest
+	comment.Id = commentId
+	logger.WithCtxValue(r.Context()).Info("created comment", zap.Any("comment", comment))
+	common.SendResponse(w, http.StatusOK, comment)
 }

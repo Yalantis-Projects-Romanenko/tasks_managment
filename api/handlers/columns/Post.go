@@ -52,8 +52,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
 		return
 	}
-
-	logger.WithCtxValue(r.Context()).Info("New record ID is:", zap.String("projectId", columnId))
-
-	common.SendResponse(w, http.StatusOK, "column created") // todo change response accrding to rest
+	column.Id = columnId
+	logger.WithCtxValue(r.Context()).Info("created column", zap.Any("column", column))
+	common.SendResponse(w, http.StatusOK, column)
 }
