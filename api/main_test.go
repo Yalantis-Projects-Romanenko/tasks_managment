@@ -36,8 +36,10 @@ func createRequest(method, path, token string, body interface{}) (req *http.Requ
 		if err != nil {
 			fail()
 		}
-		buffer := bytes.NewBuffer(reqBody)
-		req, err = http.NewRequest(method, buildLink(path), buffer)
+		req, err = http.NewRequest(method, buildLink(path), bytes.NewBuffer(reqBody))
+		if err != nil {
+			fail()
+		}
 	} else {
 		req, err = http.NewRequest(method, buildLink(path), nil)
 	}
