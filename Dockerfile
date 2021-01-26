@@ -17,11 +17,17 @@ RUN go mod download
 # Copy the code into the container
 COPY api/ ./
 
+
+
 # Build the application
 RUN go build -o main .
 
 # Move to /dist directory as the place for resulting binary folder
 WORKDIR /dist
+
+# install goose for migrations
+RUN go get -u github.com/pressly/goose/cmd/goose
+RUN cp -a /build/migrations/ .
 
 # Copy binary from build to main folder
 RUN cp /build/main .

@@ -3,7 +3,9 @@ This is a project for yalantis golang school.
 Task description is here: https://docs.google.com/document/d/1PPAbDVllQYpw7bFRStGB_Gbcoj2TRs9NvyPfepuAf8w/edit#
 
 ## Start the project
+
 open root directory of the project in command line and run:
+
 ```
 docker-compose up .
 cd api
@@ -12,8 +14,19 @@ goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=
 go run main.go
 ```
 
+## Tests
+
+run
+
+```
+docker-compose -f docker-compose.test.yml up -d
+go test ./api
+```
+
 ## Goose usage
+
 add migration example:
+
 ```
  goose -dir ./migrations create initial sql
  goose -dir ./migrations postgres "user=tasksuser password=password123431 dbname=tasks sslmode=disable" up
@@ -21,6 +34,7 @@ add migration example:
 ```
 
 ## Linter Usage
+
 ```
 curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.35.2
 golangci-lint --version
