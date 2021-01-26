@@ -1,7 +1,9 @@
 package tasks
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	dbTasks "github.com/fdistorted/task_managment/db/tasks"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
@@ -16,7 +18,7 @@ import (
 func Post(w http.ResponseWriter, r *http.Request) {
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrFailedToGetUserId)
 		return
 	}
 
@@ -25,7 +27,7 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	// decode the json request to task
 	err := json.NewDecoder(r.Body).Decode(&task)
 	if err != nil {
-		common.SendResponse(w, http.StatusBadRequest, common.FailedToParseJson)
+		common.SendResponse(w, http.StatusBadRequest, common.ErrFailedToParseJson)
 		return
 	}
 
@@ -49,7 +51,10 @@ func Post(w http.ResponseWriter, r *http.Request) {
 	taskId, err := dbTasks.CreateTask(r.Context(), columnId, projectId, task)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
-		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		if errors.Is(err, sql.ErrNoRows) {
+			common.SendResponse(w, http.StatusNotFound, common.ErrNotFound)
+		}
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrDatabaseError)
 		return
 	}
 

@@ -35,11 +35,11 @@ func CheckUsersProperty(w http.ResponseWriter, r *http.Request, userId, projectI
 	exists, err := dbProjects.Exists(r.Context(), userId, projectId)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
-		SendResponse(w, http.StatusInternalServerError, DatabaseError)
+		SendResponse(w, http.StatusInternalServerError, ErrDatabaseError)
 		return false
 	}
 	if !exists {
-		SendResponse(w, http.StatusNotFound, ResourceIsNotOwned)
+		SendResponse(w, http.StatusNotFound, ErrResourceNotOwned)
 		return false
 	}
 

@@ -1,6 +1,8 @@
 package projects
 
 import (
+	"database/sql"
+	"errors"
 	projects2 "github.com/fdistorted/task_managment/db/projects"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
@@ -13,12 +15,15 @@ func Get(w http.ResponseWriter, r *http.Request) {
 	projectId := vars["projectId"]
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrFailedToGetUserId)
 		return
 	}
 	project, err := projects2.GetById(r.Context(), userId, projectId)
 	if err != nil {
-		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		if errors.Is(err, sql.ErrNoRows) {
+			common.SendResponse(w, http.StatusNotFound, common.ErrNotFound)
+		}
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrDatabaseError)
 		return
 	}
 	common.SendResponse(w, http.StatusOK, project)

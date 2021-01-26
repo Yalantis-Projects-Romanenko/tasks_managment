@@ -1,8 +1,9 @@
 package common
 
 const (
-	FailedToParseJson  = "failed to parse json body"
-	FailedToGetUserId  = "failed to get user id from request context"
-	DatabaseError      = "something bad happened to database"
-	ResourceIsNotOwned = "current user does not own such a resource"
+	ErrFailedToParseJson = "failed to parse json body"
+	ErrFailedToGetUserId = "failed to get user id from request context"
+	ErrDatabaseError     = "something bad happened to database"
+	ErrNotFound          = "resource not found"
+	ErrResourceNotOwned  = "current user does not own such a resource"
 )

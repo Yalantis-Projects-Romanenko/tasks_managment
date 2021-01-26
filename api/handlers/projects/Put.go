@@ -1,7 +1,9 @@
 package projects
 
 import (
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"github.com/fdistorted/task_managment/db/projects"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
@@ -16,7 +18,7 @@ import (
 func Put(w http.ResponseWriter, r *http.Request) {
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
-		common.SendResponse(w, http.StatusBadRequest, common.FailedToGetUserId)
+		common.SendResponse(w, http.StatusBadRequest, common.ErrFailedToGetUserId)
 		return
 	}
 
@@ -28,7 +30,7 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	// decode the json request to project
 	err := json.NewDecoder(r.Body).Decode(&project)
 	if err != nil {
-		common.SendResponse(w, http.StatusBadRequest, common.FailedToParseJson)
+		common.SendResponse(w, http.StatusBadRequest, common.ErrFailedToParseJson)
 		return
 	}
 
@@ -44,7 +46,11 @@ func Put(w http.ResponseWriter, r *http.Request) {
 	project.UserId = userId
 	affected, err := projects.Update(r.Context(), project)
 	if err != nil {
-		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
+		if errors.Is(err, sql.ErrNoRows) {
+			common.SendResponse(w, http.StatusNotFound, common.ErrNotFound)
+		}
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrDatabaseError)
 		return
 	}
 

@@ -1,6 +1,8 @@
 package tasks
 
 import (
+	"database/sql"
+	"errors"
 	dbTasks "github.com/fdistorted/task_managment/db/tasks"
 	"github.com/fdistorted/task_managment/handlers/common"
 	"github.com/fdistorted/task_managment/handlers/middlewares"
@@ -17,7 +19,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	taskId := vars["taskId"]
 	userId, ok := middlewares.GetUserID(r.Context())
 	if !ok {
-		common.SendResponse(w, http.StatusInternalServerError, common.FailedToGetUserId)
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrFailedToGetUserId)
 		return
 	}
 
@@ -29,7 +31,10 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	affected, err := dbTasks.DeleteById(r.Context(), projectId, columnId, taskId)
 	if err != nil {
 		logger.WithCtxValue(r.Context()).Error("database error", zap.Error(err))
-		common.SendResponse(w, http.StatusInternalServerError, common.DatabaseError)
+		if errors.Is(err, sql.ErrNoRows) {
+			common.SendResponse(w, http.StatusNotFound, common.ErrNotFound)
+		}
+		common.SendResponse(w, http.StatusInternalServerError, common.ErrDatabaseError)
 		return
 	}
 
